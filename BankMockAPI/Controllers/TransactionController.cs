@@ -1,7 +1,6 @@
 ﻿namespace BankMockAPI.Controllers
 {
     using System;
-    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using Models;
 
@@ -12,18 +11,13 @@
         [HttpPost]
         public TransactionResponse Post(TransactionRequest transaction)
         {
-            var rng = new Random();
+            var random = new Random();
+            var enumValues = Enum.GetValues(typeof(PaymentStatus));
             return new TransactionResponse
             {
                 PaymentId = transaction.PaymentId,
-                PaymentStatus = RandomEnumValue<PaymentStatus>(rng)
+                PaymentStatus = Enum.Parse<PaymentStatus>(random.Next(enumValues.Length).ToString())
             };
-        }
-
-        private static T RandomEnumValue<T>(Random rng)
-        {
-            var v = Enum.GetValues(typeof(T));
-            return (T)v.GetValue(rng.Next(v.Length));
         }
     }
 }
