@@ -30,6 +30,14 @@ services:
     depends_on:
       - mongo
 
+  bank-mock-api:
+    build: ./BankMockAPI
+    restart: always
+    ports:
+      - 2000:80
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
   payment-api:
     build: ./PaymentAPI
     restart: always
@@ -40,3 +48,4 @@ services:
       - MONGODB_CONNECTION_STRING=mongodb://hacker:hacking@mongo:27017/?authSource=admin
     depends_on:
       - mongo
+      - bank-mock-api

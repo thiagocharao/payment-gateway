@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentAPI", "PaymentAPI\Pa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentAPI.Tests", "PaymentAPI.Tests\PaymentAPI.Tests.csproj", "{89B79E13-6DCF-4968-A915-EFD84743A557}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankMockAPI", "BankMockAPI\BankMockAPI.csproj", "{16EE68B9-4A40-4E03-A9F9-2F53887E314F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,5 +46,17 @@ Global
 		{89B79E13-6DCF-4968-A915-EFD84743A557}.Release|x64.Build.0 = Release|Any CPU
 		{89B79E13-6DCF-4968-A915-EFD84743A557}.Release|x86.ActiveCfg = Release|Any CPU
 		{89B79E13-6DCF-4968-A915-EFD84743A557}.Release|x86.Build.0 = Release|Any CPU
+		{16EE68B9-4A40-4E03-A9F9-2F53887E314F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16EE68B9-4A40-4E03-A9F9-2F53887E314F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16EE68B9-4A40-4E03-A9F9-2F53887E314F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{16EE68B9-4A40-4E03-A9F9-2F53887E314F}.Debug|x64.Build.0 = Debug|Any CPU
+		{16EE68B9-4A40-4E03-A9F9-2F53887E314F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{16EE68B9-4A40-4E03-A9F9-2F53887E314F}.Debug|x86.Build.0 = Debug|Any CPU
+		{16EE68B9-4A40-4E03-A9F9-2F53887E314F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16EE68B9-4A40-4E03-A9F9-2F53887E314F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16EE68B9-4A40-4E03-A9F9-2F53887E314F}.Release|x64.ActiveCfg = Release|Any CPU
+		{16EE68B9-4A40-4E03-A9F9-2F53887E314F}.Release|x64.Build.0 = Release|Any CPU
+		{16EE68B9-4A40-4E03-A9F9-2F53887E314F}.Release|x86.ActiveCfg = Release|Any CPU
+		{16EE68B9-4A40-4E03-A9F9-2F53887E314F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
