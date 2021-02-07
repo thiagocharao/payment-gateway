@@ -46,6 +46,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - MONGODB_CONNECTION_STRING=mongodb://hacker:hacking@mongo:27017/?authSource=admin
+      - BANKING_API_BASE_ADDRESS=http://bank-mock-api
     depends_on:
       - mongo
       - bank-mock-api

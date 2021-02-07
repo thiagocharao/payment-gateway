@@ -28,14 +28,15 @@ namespace PaymentAPI
         {
             var databaseConnectionString = Environment.GetEnvironmentVariable("MONGODB_CONNECTION_STRING") ??
                                            this.Configuration["DevelopmentConnectionString"];
+            var bankingApiBaseAddress = Environment.GetEnvironmentVariable("BANKING_API_BASE_ADDRESS") ??
+                                           this.Configuration["BankingApiBaseAddress"];
+
             services.AddMongoClient(databaseConnectionString);
             services.AddRepositories();
-            services.AddServices(this.Configuration["BankingApiBaseAddress"]);
+            services.AddServices(bankingApiBaseAddress);
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddControllers();
             this.SetupJWTServices(services);
-
-
 
             services.AddSwaggerGen(c =>
             {

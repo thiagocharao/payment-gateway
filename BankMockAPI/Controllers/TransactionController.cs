@@ -10,7 +10,7 @@
     public class TransactionController : ControllerBase
     {
         [HttpPost]
-        public async Task<TransactionResponse> Post(TransactionRequest transaction)
+        public TransactionResponse Post(TransactionRequest transaction)
         {
             var rng = new Random();
             return new TransactionResponse
