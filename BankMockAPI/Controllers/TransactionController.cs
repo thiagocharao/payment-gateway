@@ -6,7 +6,7 @@
     using Models;
 
     [ApiController]
-    [Route("[controller]")]
+    [Route("transactions")]
     public class TransactionController : ControllerBase
     {
         [HttpPost]

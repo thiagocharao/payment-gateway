@@ -13,6 +13,7 @@ namespace PaymentAPI.Controllers
     using Microsoft.IdentityModel.Tokens;
     using Models;
     using PaymentAPI.Domain.Repositories;
+
     public static class Extensions
     {
         public static void Deconstruct<T>(this IList<T> list, out T first, out IList<T> rest)
@@ -38,7 +39,8 @@ namespace PaymentAPI.Controllers
         private readonly IConfiguration _configuration;
         private readonly IRepository<Domain.User> _userRepository;
 
-        public TokenController(ILogger<PaymentController> logger, IConfiguration configuration, IRepository<Domain.User> userRepository)
+        public TokenController(ILogger<PaymentController> logger, IConfiguration configuration,
+            IRepository<Domain.User> userRepository)
         {
             _logger = logger;
             _configuration = configuration;
@@ -53,21 +55,21 @@ namespace PaymentAPI.Controllers
 
             var (username, password, _) = credentialsDecoded.Split(':');
 
-            Domain.User user = await _userRepository.FindOneAsync(x => x.Username.Equals(username) && x.Password.Equals(password));
+            var user = await _userRepository.FindOneAsync(x =>
+                x.Username.Equals(username) && x.Password.Equals(password));
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWTSecret"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-            var permClaims = new List<Claim>
-            {
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim("userid", user.Id.ToString())
-            };
-
             var issuer = _configuration["JWTIssuer"];
-            var token = new JwtSecurityToken(issuer,
-                issuer,
-                permClaims,
+            var token = new JwtSecurityToken(
+                issuer: issuer,
+                audience: issuer,
+                claims: new List<Claim>
+                {
+                    new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()), new("userid", user.Id.ToString())
+                },
+                notBefore: null,
                 expires: DateTime.Now.AddDays(1),
                 signingCredentials: credentials);
 

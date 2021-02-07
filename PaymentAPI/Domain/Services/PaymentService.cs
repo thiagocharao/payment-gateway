@@ -2,6 +2,7 @@ namespace PaymentAPI.Domain.Services
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading;
     using System.Threading.Tasks;
     using Domain;
     using Repositories;
@@ -15,9 +16,16 @@ namespace PaymentAPI.Domain.Services
             _paymentRepository = paymentRepository;
         }
 
-        public async Task<IEnumerable<Payment>> GetUserPayments(Guid merchantId)
+        public async Task<IEnumerable<Payment>> GetUserPaymentsAsync(Guid userId, CancellationToken ct) =>
+            await _paymentRepository.FilterByAsync(x => x.UserId.Equals(userId), ct);
+
+        public async Task<Payment> GetUserPaymentAsync(Guid userId, Guid paymentId, CancellationToken ct) =>
+            await _paymentRepository.FindOneAsync(x => x.UserId.Equals(userId) && x.Id.Equals(paymentId), ct);
+
+        public async Task<Payment> CreateUserPaymentAsync(Guid userId, Payment payment, CancellationToken ct)
         {
-            return await _paymentRepository.FilterByAsync(x => x.MerchantId.Equals(merchantId));
+            payment.UserId = userId;
+            return await _paymentRepository.InsertOneAsync(payment, ct);
         }
     }
 }

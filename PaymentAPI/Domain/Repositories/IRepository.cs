@@ -15,5 +15,9 @@ namespace PaymentAPI.Domain.Repositories
         Task<TDocument> FindOneAsync(
             Expression<Func<TDocument, bool>> filterExpression,
             CancellationToken ct = default);
+
+        Task<TDocument> InsertOneAsync(TDocument document, CancellationToken ct = default);
+
+        Task ReplaceOneAsync(TDocument document, CancellationToken ct = default);
     }
 }

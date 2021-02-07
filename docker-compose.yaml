@@ -34,7 +34,7 @@ services:
     build: ./BankMockAPI
     restart: always
     ports:
-      - 2000:80
+      - 5001:80
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
 

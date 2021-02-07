@@ -4,7 +4,7 @@ namespace PaymentAPI.Domain
 
     public class Payment : Document
     {
-        public Guid MerchantId { get; set; }
+        public Guid UserId { get; set; }
         public string Currency { get; set; }
         public decimal Amount { get; set; }
 
@@ -12,5 +12,6 @@ namespace PaymentAPI.Domain
         public int ExpiryMonth { get; set; }
         public int ExpiryYear { get; set; }
         public string CVV { get; set; }
+        public string PaymentStatus { get; set; }
     }
 }

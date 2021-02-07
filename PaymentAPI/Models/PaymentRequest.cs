@@ -2,12 +2,9 @@ namespace PaymentAPI.Models
 {
     using System;
 
-    public class Payment
+    public class PaymentRequest
     {
-        public Guid Id { get; set; }
-        public DateTime Date { get; set; }
         public decimal Amount { get; set; }
-
         public string CreditCardNumber { get; set; }
         public int ExpiryMonth { get; set; }
         public int ExpiryYear { get; set; }

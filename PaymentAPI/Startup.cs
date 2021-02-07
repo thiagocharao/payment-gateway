@@ -13,7 +13,9 @@ namespace PaymentAPI
     using Microsoft.Extensions.Hosting;
     using Microsoft.IdentityModel.Tokens;
     using Microsoft.OpenApi.Models;
-
+    using AutoMapper;
+    using Domain.Services;
+    using Models;
 
     public class Startup
     {
@@ -28,10 +30,12 @@ namespace PaymentAPI
                                            this.Configuration["DevelopmentConnectionString"];
             services.AddMongoClient(databaseConnectionString);
             services.AddRepositories();
-            services.AddServices();
-
+            services.AddServices(this.Configuration["BankingApiBaseAddress"]);
+            services.AddAutoMapper(typeof(MappingProfile));
             services.AddControllers();
             this.SetupJWTServices(services);
+
+
 
             services.AddSwaggerGen(c =>
             {
