@@ -20,7 +20,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PaymentGateway\PaymentGateway.csproj" />
+    <ProjectReference Include="..\PaymentAPI\PaymentAPI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers" />
   </ItemGroup>
 
 </Project>

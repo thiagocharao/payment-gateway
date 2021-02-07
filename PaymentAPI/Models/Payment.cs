@@ -1,17 +1,18 @@
-using System;
-
-namespace PaymentGateway.Models
+namespace PaymentAPI.Models
 {
+    using System;
+
     public class Payment
     {
         public Guid Id { get; set; }
         public DateTime Date { get; set; }
         public decimal Amount { get; set; }
-        
+
         public string CreditCardNumber { get; set; }
-        public DateTime ExpiryDate { get; set; }
+        public int ExpiryMonth { get; set; }
+        public int ExpiryYear { get; set; }
         public string CVV { get; set; }
-        
+
         public string Currency { get; set; }
     }
 }

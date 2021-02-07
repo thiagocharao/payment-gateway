@@ -1,0 +1,49 @@
+[{
+  "_id": {
+    "$binary": {
+      "base64": "I08aRTh25kGqHhyzIRhrKA==",
+      "subType": "03"
+    }
+  },
+  "CreatedAt": {
+    "$date": "2021-02-06T17:42:05.200Z"
+  },
+  "Username": "TransferWise_user",
+  "Password": "abc1234"
+}, {
+  "_id": {
+    "$binary": {
+      "base64": "cmgqIlAKZk2QPUUDXPXPlA==",
+      "subType": "03"
+    }
+  },
+  "CreatedAt": {
+    "$date": "2021-02-06T17:42:05.200Z"
+  },
+  "Username": "Apple_user",
+  "Password": "abc1234"
+}, {
+  "_id": {
+    "$binary": {
+      "base64": "FT31/yGhbk+DDqX80VvP3g==",
+      "subType": "03"
+    }
+  },
+  "CreatedAt": {
+    "$date": "2021-02-06T17:42:05.200Z"
+  },
+  "Username": "Amazon_user",
+  "Password": "abc1234"
+}, {
+  "_id": {
+    "$binary": {
+      "base64": "FAMjeDKgsk20B4x5HeSZKw==",
+      "subType": "03"
+    }
+  },
+  "CreatedAt": {
+    "$date": "2021-02-06T17:42:05.200Z"
+  },
+  "Username": "Farfetch_user",
+  "Password": "abc1234"
+}]
