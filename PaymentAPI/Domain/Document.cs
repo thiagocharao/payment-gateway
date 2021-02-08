@@ -7,6 +7,9 @@ namespace PaymentAPI.Domain
         public Guid Id { get; set; }
         public DateTime CreatedAt { get; set; }
 
-        protected Document() => this.CreatedAt = DateTime.UtcNow;
+        protected Document()
+        {
+            CreatedAt = DateTime.UtcNow;
+        }
     }
 }

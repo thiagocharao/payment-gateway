@@ -1,46 +1,51 @@
-#pragma warning disable IDE0058 // Expression value is never used
 namespace PaymentAPI
 {
     using System;
-    using System.Text;
-    using System.Threading.Tasks;
-    using Domain.IoC;
-    using Microsoft.AspNetCore.Authentication.JwtBearer;
+
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
-    using Microsoft.IdentityModel.Tokens;
     using Microsoft.OpenApi.Models;
-    using AutoMapper;
-    using Domain.Services;
+
+    using Domain.IoC;
+
     using Models;
 
     public class Startup
     {
-        public Startup(IConfiguration configuration) => this.Configuration = configuration;
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
 
         private IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             var databaseConnectionString = Environment.GetEnvironmentVariable("MONGODB_CONNECTION_STRING") ??
-                                           this.Configuration["DevelopmentConnectionString"];
+                                           Configuration["DevelopmentConnectionString"];
             var bankingApiBaseAddress = Environment.GetEnvironmentVariable("BANKING_API_BASE_ADDRESS") ??
-                                           this.Configuration["BankingApiBaseAddress"];
+                                        Configuration["BankingApiBaseAddress"];
 
             services.AddMongoClient(databaseConnectionString);
             services.AddRepositories();
             services.AddServices(bankingApiBaseAddress);
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddControllers();
-            this.SetupJWTServices(services);
-
+            services.AddAuthenticationWithJwtValidation(Configuration["JWTIssuer"], Configuration["JWTSecret"]);
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("UserIdRequired", policy => policy.RequireClaim("userId"));
+            });
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "PaymentAPI", Version = "v1"});
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "PaymentAPI",
+                    Version = "v1"
+                });
 
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                 {
@@ -58,7 +63,10 @@ namespace PaymentAPI
                     {
                         new OpenApiSecurityScheme
                         {
-                            Reference = new OpenApiReference {Type = ReferenceType.SecurityScheme, Id = "Bearer"}
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme, Id = "Bearer"
+                            }
                         },
                         Array.Empty<string>()
                     }
@@ -66,36 +74,6 @@ namespace PaymentAPI
             });
         }
 
-        private void SetupJWTServices(IServiceCollection services) =>
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidIssuer = this.Configuration["JWTIssuer"],
-                        ValidAudience = this.Configuration["JWTIssuer"],
-                        IssuerSigningKey =
-                            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.Configuration["JWTSecret"]))
-                    };
-
-                    options.Events = new JwtBearerEvents
-                    {
-                        OnAuthenticationFailed = context =>
-                        {
-                            if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
-                            {
-                                context.Response.Headers.Add("Token-Expired", "true");
-                            }
-
-                            return Task.CompletedTask;
-                        }
-                    };
-                });
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -105,7 +83,6 @@ namespace PaymentAPI
 
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PaymentAPI v1"));
-
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthentication();
@@ -114,4 +91,3 @@ namespace PaymentAPI
         }
     }
 }
-#pragma warning restore IDE0058 // Expression value is never used

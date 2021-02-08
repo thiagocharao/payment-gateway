@@ -1,34 +1,33 @@
 namespace PaymentAPI.Domain.Services
 {
     using System.Net.Http;
-    using System.Text;
     using System.Text.Json;
-    using System.Threading;
+    using System.Text;
     using System.Threading.Tasks;
+    using System.Threading;
 
     using Domain;
-    using Microsoft.Extensions.Configuration;
+
     using Repositories;
 
     public class BankingService : IBankingService
     {
         private readonly HttpClient _httpClient;
-        private readonly IConfiguration _configuration;
         private readonly IRepository<Payment> _paymentRepository;
 
-        public BankingService(HttpClient client, IConfiguration configuration, IRepository<Payment> paymentRepository)
+        public BankingService(HttpClient client, IRepository<Payment> paymentRepository)
         {
             _httpClient = client;
-            _configuration = configuration;
             _paymentRepository = paymentRepository;
         }
 
-        public async Task<Payment> ProcessPaymentAsync(Payment payment, CancellationToken ct)
+        public async Task<Payment> ProcessPaymentAsync(
+            Payment payment, string processingEndpoint, CancellationToken ct)
         {
             var paymentJson = new StringContent(JsonSerializer.Serialize(payment), Encoding.UTF8, "application/json");
 
             using var httpResponse =
-                await _httpClient.PostAsync(_configuration["BankingPaymentProcessEndpoint"], paymentJson, ct);
+                await _httpClient.PostAsync(processingEndpoint, paymentJson, ct);
 
             httpResponse.EnsureSuccessStatusCode();
 
@@ -47,6 +46,5 @@ namespace PaymentAPI.Domain.Services
 
             return payment;
         }
-
     }
 }

@@ -1,0 +1,44 @@
+@baseURL=http://localhost:5000
+
+# @name getToken
+POST {{baseURL}}/tokens
+Content-Type: application/json
+Accept: text/plain
+
+{
+    "credentials": "QXBwbGVfdXNlcjphYmMxMjM0"
+}
+
+###
+@authToken = {{getToken.response.body.$.token}}
+###
+# @name createPayment
+POST http://localhost:5000/payments
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "amount": 3590.55,
+  "creditCardNumber": "4444-3333-2222-1111",
+  "expiryMonth": 10,
+  "expiryYear": 2028,
+  "cvv": "466",
+  "currency": "EUR"
+}
+
+###
+@paymentRoute = {{createPayment.response.headers.Location}}
+# @name getPayment
+GET {{paymentRoute}}
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{authToken}}
+
+###
+
+# @name getPayments
+GET http://localhost:5000/payments
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{authToken}}

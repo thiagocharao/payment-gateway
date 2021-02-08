@@ -9,7 +9,6 @@ namespace PaymentAPI.Models
             // Payments
             CreateMap<PaymentRequest, Domain.Payment>();
             CreateMap<Domain.Payment, PaymentResponse>();
-
         }
     }
 }

@@ -1,6 +1,7 @@
 namespace PaymentAPI.Domain.Repositories
 {
     using Microsoft.Extensions.Configuration;
+
     using MongoDB.Driver;
 
     public class UserRepository : BaseRepository<User>

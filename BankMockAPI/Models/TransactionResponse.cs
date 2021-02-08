@@ -1,7 +1,7 @@
 namespace BankMockAPI.Models
 {
-    using System;
     using System.Text.Json.Serialization;
+    using System;
 
     public class TransactionResponse
     {

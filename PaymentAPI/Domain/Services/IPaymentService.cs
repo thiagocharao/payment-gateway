@@ -4,6 +4,7 @@ namespace PaymentAPI.Domain.Services
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
+
     using Domain;
 
     public interface IPaymentService

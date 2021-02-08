@@ -1,6 +1,7 @@
 namespace PaymentAPI.Domain
 {
     using System;
+
     using MongoDB.Bson.Serialization.Attributes;
 
     public interface IDocument
