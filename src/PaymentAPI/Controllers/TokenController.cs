@@ -36,7 +36,7 @@ namespace PaymentAPI.Controllers
 
         [HttpPost()]
         [Consumes(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateTokenAsync(TokenRequest tokenRequest, CancellationToken ct = default)
         {
@@ -53,7 +53,7 @@ namespace PaymentAPI.Controllers
                 var securityToken = _tokenService.CreateSecurityToken(
                     user.Id, _configuration["JWTSecret"], _configuration["JWTIssuer"]);
 
-                return Ok(new TokenResponse
+                return Created(string.Empty, new TokenResponse
                 {
                     Token = _tokenService.WriteSecurityToken(securityToken)
                 });

@@ -60,7 +60,7 @@ namespace PaymentAPI.Tests.Controllers
         }
 
         [Fact]
-        public async Task Create_Returns200WithToken()
+        public async Task Create_Returns201WithToken()
         {
             // Arrange
             var userId = Guid.NewGuid();
@@ -80,10 +80,10 @@ namespace PaymentAPI.Tests.Controllers
             };
 
             // Act
-            var response = await _controller.CreateTokenAsync(request) as OkObjectResult;
+            var response = await _controller.CreateTokenAsync(request) as CreatedResult;
 
             // Assert
-            response.StatusCode.Should().Be(StatusCodes.Status200OK);
+            response.StatusCode.Should().Be(StatusCodes.Status201Created);
             response.Value.Should().BeEquivalentTo(new TokenResponse
             {
                 Token = "MY TOKEN"

@@ -1,8 +1,8 @@
-version: '3.8'
+version: '3.4'
 
 services:
   mongo:
-    image: mongo
+    image: mongo:4.4.3
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: hacker
@@ -11,7 +11,7 @@ services:
       - 27017:27017
 
   mongo-express:
-    image: mongo-express
+    image: mongo-express:0.54.0
     restart: always
     ports:
       - 8081:8081
@@ -31,7 +31,7 @@ services:
       - mongo
 
   bank-mock-api:
-    build: ./BankMockAPI
+    build: ./src/BankMockAPI
     restart: always
     ports:
       - 5001:80
@@ -39,7 +39,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
 
   payment-api:
-    build: ./PaymentAPI
+    build: ./src/PaymentAPI
     restart: always
     ports:
       - 5000:80
