@@ -30,6 +30,7 @@ Main idea was to keep it as simple as possible, considering it as a small piece 
  - It was hard to think of an API without any authentication/authorization flow, reason that there is **/tokens** endpoint.
  - As of the goal was to focus on the payments, I assumed a group of users pre-set, which is why I created a **mongo-seed** script to create these users and make it possible to play around with the API.
  - Eventhough it is simple I tried to separate into smaller yet meaningful domain resources **tokens**, **users** and **payments** each of the with their own **services** and **repositories** (when applicable)
+ - The idea of IoC inside `src/Domain/IoC` is the keep all Dependency Injection logic of that apart from rest, so at any point that it needs to be extracted to a different package this logic goes with it.
 
 #### What could be improved
  - BankMockAPI intention is to simulate an external AcquiringBank API to process payments and give a response. Even though this solution does not include integration tests, I would think of a way to replace this Mock API by Integration tests using **Test Server**.
