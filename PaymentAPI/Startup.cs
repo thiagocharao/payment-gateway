@@ -13,6 +13,8 @@ namespace PaymentAPI
 
     using Models;
 
+    using Prometheus;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -85,9 +87,26 @@ namespace PaymentAPI
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PaymentAPI v1"));
             app.UseHttpsRedirection();
             app.UseRouting();
+            app.UseHttpMetrics(); // Must be called after app.UseRouting
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseEndpoints(endpoints => endpoints.MapControllers());
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapMetrics();
+            });
+            
+            app.Use((context, next) =>
+            {
+                // Http Context
+                var counter = Metrics.CreateCounter("payment_api_path_counter", "Counts requests to Payment API endpoints", 
+                    new CounterConfiguration
+                    {
+                        LabelNames = new[] { "method", "endpoint" }
+                    });
+                counter.WithLabels(context.Request.Method, context.Request.Path).Inc();
+                return next();
+            });
         }
     }
 }

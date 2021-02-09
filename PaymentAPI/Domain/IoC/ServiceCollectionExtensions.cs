@@ -13,6 +13,8 @@ namespace PaymentAPI.Domain.IoC
     using MongoDB.Bson;
     using MongoDB.Driver;
 
+    using Prometheus;
+
     using Repositories;
 
     using Services;
@@ -41,7 +43,7 @@ namespace PaymentAPI.Domain.IoC
             services.AddHttpClient<IBankingService, BankingService>(client =>
             {
                 client.BaseAddress = new Uri(bankingApiBaseAddress);
-            });
+            }).UseHttpClientMetrics();
         }
 
         public static void AddAuthenticationWithJwtValidation(this IServiceCollection services, string issuer, string secret)

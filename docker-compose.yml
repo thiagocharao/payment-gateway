@@ -50,3 +50,10 @@ services:
     depends_on:
       - mongo
       - bank-mock-api
+        
+  prometheus:
+    build: ./prometheus
+    ports:
+        - 9090:9090
+    depends_on:
+      - payment-api

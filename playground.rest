@@ -13,7 +13,7 @@ Accept: text/plain
 @authToken = {{getToken.response.body.$.token}}
 ###
 # @name createPayment
-POST http://localhost:5000/payments
+POST {{baseURL}}/payments
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{authToken}}
@@ -38,7 +38,7 @@ Authorization: Bearer {{authToken}}
 ###
 
 # @name getPayments
-GET http://localhost:5000/payments
+GET {{baseURL}}/payments
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{authToken}}
