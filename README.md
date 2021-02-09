@@ -54,47 +54,18 @@ Main idea was to keep it as simple as possible, considering it as a small piece 
 ## PaymentAPI Use Cases
 
 ### Get an API Token (JWT)
-```mermaid
-sequenceDiagram
-User ->> PaymentAPI: POST /tokens
-PaymentAPI ->> User: 201 with JWT Token
-```
+![alt text](https://github.com/thiagocharao/payment-gateway/blob/main/readme-assets/a-payment.png?raw=true)
+
 	JWTs expire within a day and hold a userId inside
 
 ### Create a payment
-```mermaid
-sequenceDiagram
-User ->> PaymentAPI: POST /tokens
-PaymentAPI ->> User: 201
-User ->> PaymentAPI: POST /payments
-PaymentAPI -->> MongoDB: Save payment as Processing
-PaymentAPI ->> BankMockAPI: POST /transactions
-BankMockAPI ->> PaymentAPI: 201 with Accepted/Declined
-PaymentAPI -->> MongoDB: Update payment with result
-PaymentAPI ->> User: 201 Payment created
-```
+![alt text](https://github.com/thiagocharao/payment-gateway/blob/main/readme-assets/create-payment.png?raw=true)
 
 ### Retrieve a payment
-```mermaid
-sequenceDiagram
-User ->> PaymentAPI: POST /tokens
-PaymentAPI ->> User: 201
-User ->> PaymentAPI: GET /payment/{id}
-PaymentAPI ->> MongoDB: Retrieve a user payment
-MongoDB ->> PaymentAPI: 
-PaymentAPI ->> User: 200
-```
+![alt text](https://github.com/thiagocharao/payment-gateway/blob/main/readme-assets/a-payment.png?raw=true)
 
 ### Retrieve all user's payments
-```mermaid
-sequenceDiagram
-User ->> PaymentAPI: POST /tokens
-PaymentAPI ->> User: 201
-User ->> PaymentAPI: GET /payments
-PaymentAPI ->> MongoDB: Retrieve all user's payments
-MongoDB ->> PaymentAPI: 
-PaymentAPI ->> User: 200
-```
+![alt text](https://github.com/thiagocharao/payment-gateway/blob/main/readme-assets/all-payments.png?raw=true)
 
 ## But I really want to debug the solution 🤓
 
